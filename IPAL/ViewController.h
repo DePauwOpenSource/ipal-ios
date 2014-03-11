@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AFNetworking.h"
 
 @interface ViewController : UIViewController
+- (IBAction)loginButtonPressed:(id)sender;
+- (void)showPasscodeAlert;
+
+@property (weak, nonatomic) IBOutlet UITextField *usernameField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 
 @end

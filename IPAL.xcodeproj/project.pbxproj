@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8DBE426B18CE7DA100BE5F50 /* QuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBE426A18CE7DA100BE5F50 /* QuestionViewController.m */; };
+		8DBE426E18CE95F600BE5F50 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBE426D18CE95F600BE5F50 /* Question.m */; };
+		8DBE427118CE96D200BE5F50 /* QuestionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBE427018CE96D200BE5F50 /* QuestionFactory.m */; };
+		8DBE427418CE9A7700BE5F50 /* MultipleChoiceQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBE427318CE9A7700BE5F50 /* MultipleChoiceQuestion.m */; };
+		8DBE427718CE9A8300BE5F50 /* EssayQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBE427618CE9A8300BE5F50 /* EssayQuestion.m */; };
 		8DE267FD18CD0F2900B8D8AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DE267FC18CD0F2900B8D8AB /* Foundation.framework */; };
 		8DE267FF18CD0F2900B8D8AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DE267FE18CD0F2900B8D8AB /* CoreGraphics.framework */; };
 		8DE2680118CD0F2900B8D8AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DE2680018CD0F2900B8D8AB /* UIKit.framework */; };
@@ -21,6 +26,7 @@
 		8DE2681E18CD0F2900B8D8AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DE2680018CD0F2900B8D8AB /* UIKit.framework */; };
 		8DE2682618CD0F2900B8D8AB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2682418CD0F2900B8D8AB /* InfoPlist.strings */; };
 		8DE2682818CD0F2900B8D8AB /* IPALTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2682718CD0F2900B8D8AB /* IPALTests.m */; };
+		C4BF8A92C3C44E77B3A7CCBE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8F56997F9A4FC0B1696400 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +40,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D8F56997F9A4FC0B1696400 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D9E651DABDD44E69FA7F2D1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		8DBE426918CE7DA100BE5F50 /* QuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewController.h; sourceTree = "<group>"; };
+		8DBE426A18CE7DA100BE5F50 /* QuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewController.m; sourceTree = "<group>"; };
+		8DBE426C18CE95F600BE5F50 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
+		8DBE426D18CE95F600BE5F50 /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
+		8DBE426F18CE96D200BE5F50 /* QuestionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionFactory.h; sourceTree = "<group>"; };
+		8DBE427018CE96D200BE5F50 /* QuestionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionFactory.m; sourceTree = "<group>"; };
+		8DBE427218CE9A7700BE5F50 /* MultipleChoiceQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleChoiceQuestion.h; sourceTree = "<group>"; };
+		8DBE427318CE9A7700BE5F50 /* MultipleChoiceQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleChoiceQuestion.m; sourceTree = "<group>"; };
+		8DBE427518CE9A8300BE5F50 /* EssayQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EssayQuestion.h; sourceTree = "<group>"; };
+		8DBE427618CE9A8300BE5F50 /* EssayQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EssayQuestion.m; sourceTree = "<group>"; };
 		8DE267F918CD0F2900B8D8AB /* IPAL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPAL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DE267FC18CD0F2900B8D8AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8DE267FE18CD0F2900B8D8AB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -63,6 +81,7 @@
 				8DE267FF18CD0F2900B8D8AB /* CoreGraphics.framework in Frameworks */,
 				8DE2680118CD0F2900B8D8AB /* UIKit.framework in Frameworks */,
 				8DE267FD18CD0F2900B8D8AB /* Foundation.framework in Frameworks */,
+				C4BF8A92C3C44E77B3A7CCBE /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +98,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8DBE427818CE9A9100BE5F50 /* QuestionModel */ = {
+			isa = PBXGroup;
+			children = (
+				8DBE426C18CE95F600BE5F50 /* Question.h */,
+				8DBE426D18CE95F600BE5F50 /* Question.m */,
+				8DBE426F18CE96D200BE5F50 /* QuestionFactory.h */,
+				8DBE427018CE96D200BE5F50 /* QuestionFactory.m */,
+				8DBE427218CE9A7700BE5F50 /* MultipleChoiceQuestion.h */,
+				8DBE427318CE9A7700BE5F50 /* MultipleChoiceQuestion.m */,
+				8DBE427518CE9A8300BE5F50 /* EssayQuestion.h */,
+				8DBE427618CE9A8300BE5F50 /* EssayQuestion.m */,
+			);
+			name = QuestionModel;
+			sourceTree = "<group>";
+		};
 		8DE267F018CD0F2900B8D8AB = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +120,7 @@
 				8DE2682118CD0F2900B8D8AB /* IPALTests */,
 				8DE267FB18CD0F2900B8D8AB /* Frameworks */,
 				8DE267FA18CD0F2900B8D8AB /* Products */,
+				3D9E651DABDD44E69FA7F2D1 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +140,7 @@
 				8DE267FE18CD0F2900B8D8AB /* CoreGraphics.framework */,
 				8DE2680018CD0F2900B8D8AB /* UIKit.framework */,
 				8DE2681B18CD0F2900B8D8AB /* XCTest.framework */,
+				1D8F56997F9A4FC0B1696400 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -112,6 +148,7 @@
 		8DE2680218CD0F2900B8D8AB /* IPAL */ = {
 			isa = PBXGroup;
 			children = (
+				8DBE427818CE9A9100BE5F50 /* QuestionModel */,
 				8DE2680B18CD0F2900B8D8AB /* AppDelegate.h */,
 				8DE2680C18CD0F2900B8D8AB /* AppDelegate.m */,
 				8DE2680E18CD0F2900B8D8AB /* Main.storyboard */,
@@ -119,6 +156,8 @@
 				8DE2681218CD0F2900B8D8AB /* ViewController.m */,
 				8DE2681418CD0F2900B8D8AB /* Images.xcassets */,
 				8DE2680318CD0F2900B8D8AB /* Supporting Files */,
+				8DBE426918CE7DA100BE5F50 /* QuestionViewController.h */,
+				8DBE426A18CE7DA100BE5F50 /* QuestionViewController.m */,
 			);
 			path = IPAL;
 			sourceTree = "<group>";
@@ -159,9 +198,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8DE2682B18CD0F2900B8D8AB /* Build configuration list for PBXNativeTarget "IPAL" */;
 			buildPhases = (
+				0ADA07EF5AF14D038530C7C5 /* Check Pods Manifest.lock */,
 				8DE267F518CD0F2900B8D8AB /* Sources */,
 				8DE267F618CD0F2900B8D8AB /* Frameworks */,
 				8DE267F718CD0F2900B8D8AB /* Resources */,
+				AB439AA3631D404086B5951C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,14 +285,52 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0ADA07EF5AF14D038530C7C5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AB439AA3631D404086B5951C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8DE267F518CD0F2900B8D8AB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DBE427118CE96D200BE5F50 /* QuestionFactory.m in Sources */,
 				8DE2681318CD0F2900B8D8AB /* ViewController.m in Sources */,
 				8DE2680D18CD0F2900B8D8AB /* AppDelegate.m in Sources */,
+				8DBE426E18CE95F600BE5F50 /* Question.m in Sources */,
+				8DBE427418CE9A7700BE5F50 /* MultipleChoiceQuestion.m in Sources */,
+				8DBE426B18CE7DA100BE5F50 /* QuestionViewController.m in Sources */,
 				8DE2680918CD0F2900B8D8AB /* main.m in Sources */,
+				8DBE427718CE9A8300BE5F50 /* EssayQuestion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +454,7 @@
 		};
 		8DE2682C18CD0F2900B8D8AB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D9E651DABDD44E69FA7F2D1 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -388,6 +468,7 @@
 		};
 		8DE2682D18CD0F2900B8D8AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D9E651DABDD44E69FA7F2D1 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -460,6 +541,7 @@
 				8DE2682D18CD0F2900B8D8AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8DE2682E18CD0F2900B8D8AB /* Build configuration list for PBXNativeTarget "IPALTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +550,7 @@
 				8DE2683018CD0F2900B8D8AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
