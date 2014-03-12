@@ -8,6 +8,10 @@
 
 #import "QuestionFactory.h"
 
+@interface QuestionFactory()
+
+@end
+
 @implementation QuestionFactory
 
 + (Question *)createNewQuestionWithData:(NSData *)data
@@ -21,6 +25,8 @@
     NSArray *textElement = [doc searchWithXPathQuery:@"//legend[1]"];
     TFHppleElement *text = textElement[0];
     
+    Question *question;
+    
     if([[type text] isEqualToString:@"multichoice"])
     {
         NSLog(@"Found MCQ...");
@@ -31,17 +37,39 @@
             [choices addObject:[e text]];
         }
         NSLog(@"Populated choices");
-        return [[MultipleChoiceQuestion alloc] initWithText:[text text] withChoices:choices];
+        question = [[MultipleChoiceQuestion alloc] initWithText:[text text] withChoices:choices];
     }
     else if([[type text] isEqualToString:@"essay"])
     {
         NSArray *elements = [doc searchWithXPathQuery:@"//legend[1]"];
         TFHppleElement *text = elements[0];
-        EssayQuestion *eq = [[EssayQuestion alloc] initWithText:[text text]];
-        return eq;
+        question = [[EssayQuestion alloc] initWithText:[text text]];
     }
     
-    return Nil;
+    //populate properties from hidden input
+    int answerId = [[QuestionFactory getInputWithName:@"answer_id" fromDoc:doc] intValue];
+    int questionId = [[QuestionFactory getInputWithName:@"question_id" fromDoc:doc] intValue];
+    int activeQuestionId = [[QuestionFactory getInputWithName:@"active_question_id" fromDoc:doc] intValue];
+    int courseId = [[QuestionFactory getInputWithName:@"course_id" fromDoc:doc] intValue];
+    int userId = [[QuestionFactory getInputWithName:@"user_id" fromDoc:doc] intValue];
+    int ipalId = [[QuestionFactory getInputWithName:@"ipal_id" fromDoc:doc] intValue];
+    NSString *instructor = [QuestionFactory getInputWithName:@"instructor" fromDoc:doc];
+    question.answerId = answerId;
+    question.questionId = questionId;
+    question.activeQuestionId = activeQuestionId;
+    question.courseId = courseId;
+    question.userId = userId;
+    question.ipalId = ipalId;
+    question.instructor = instructor;
+    
+    return question;
+}
+
++(NSString *) getInputWithName:(NSString *) name fromDoc: (TFHpple *) doc
+{
+    NSString *query = [NSString stringWithFormat:@"//input[@name='%@'][1]", name];
+    NSArray *elements = [doc searchWithXPathQuery:query];
+    return [elements[0] objectForKey:@"value"];
 }
 
 @end

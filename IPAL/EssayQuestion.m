@@ -15,8 +15,15 @@
     self = [super init];
     self.text = text;
     self.type = @"essay";
-    
+    self.answer = @"";
     return self;
 }
+
+
+-(NSString *) description {
+    return [NSString stringWithFormat:@"%@\nCurrentAnswer: %@]", [super description], self.answer];
+}
+
+
 
 @end

@@ -20,4 +20,8 @@
     return self;
 }
 
+-(NSString *) description {
+    return [NSString stringWithFormat:@"%@\nChoices: %@]", [super description], self.choices];
+}
+
 @end

@@ -10,6 +10,8 @@
 
 @interface EssayQuestion : Question
 
+@property (nonatomic, strong) NSString *answer;
+
 - (id) initWithText:(NSString *)text;
 
 @end

@@ -14,4 +14,15 @@
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *text;
 
+//properties representing hidden field in question form
+@property int answerId; // -1 for essay, otherwise the value of the choices
+@property int questionId;
+@property int activeQuestionId;
+@property int courseId;
+@property int userId;
+@property int ipalId;
+@property (nonatomic, strong) NSString *instructor;
+
+- (NSDictionary *) getParametersForSubmission;
+
 @end
