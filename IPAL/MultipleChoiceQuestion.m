@@ -15,7 +15,7 @@
     self = [super init];
     self.text = text;
     self.choices = choices;
-    self.type = @"multiplechoice";
+    self.type = MULTIPLE_CHOICE;
     
     return self;
 }

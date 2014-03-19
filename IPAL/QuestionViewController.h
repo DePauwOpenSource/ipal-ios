@@ -12,6 +12,7 @@
 
 @interface QuestionViewController : UIViewController
 
-@property NSString *questionType;
+@property (strong, nonatomic) Question *question;
+@property int passcode;
 
 @end

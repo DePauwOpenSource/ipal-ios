@@ -7,6 +7,10 @@
 //
 
 #import "QuestionViewController.h"
+#import "QuestionView.h"
+#import "EssayQuestionView.h"
+#import "Question.h"
+#import "AFNetworking.h"
 
 @interface QuestionViewController ()
 
@@ -14,28 +18,41 @@
 
 @implementation QuestionViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://54.218.0.148/moodle/mod/ipal/tempview.php?p=125&user=user"]];
-    Question *question = [QuestionFactory createNewQuestionWithData:data];
-    NSLog(@"%@", question);
+}
+
+-(void) loadView {
+    [self loadQuestion];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)getQuestionFromServer:(UIBarButtonItem *)sender {
+    [self loadQuestion];
+}
+
+- (void)loadQuestion {
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://54.218.0.148/moodle/mod/ipal/tempview.php?p=125&user=user"]];
+    Question *question = [QuestionFactory createNewQuestionWithData:data];
+    QuestionView *questionView = [self getQuestionViewFromQuestion:question];
+    NSLog(@"%@", question);
+    questionView.question = question;
+    self.view = questionView;
+}
+
+- (QuestionView *)getQuestionViewFromQuestion:(Question *)question {
+    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
+    if ([question.type isEqualToString:MULTIPLE_CHOICE]) {
+        return [[QuestionView alloc] initWithFrame:applicationFrame];
+    } else {
+        return [[EssayQuestionView alloc] initWithFrame:applicationFrame];
+    }
 }
 
 @end

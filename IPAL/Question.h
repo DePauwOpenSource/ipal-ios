@@ -10,6 +10,8 @@
 #import "TFHpple.h"
 
 @interface Question : NSObject
+extern NSString *const MULTIPLE_CHOICE;
+extern NSString *const ESSAY;
 
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *text;

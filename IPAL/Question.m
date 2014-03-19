@@ -10,6 +10,9 @@
 
 @implementation Question
 
+NSString *const MULTIPLE_CHOICE = @"multichoice";
+NSString *const ESSAY = @"essay";
+
 -(NSString *) description
 {
     return [NSString stringWithFormat:@"[Question type: %@, text: %@\nanswerId:%d, questionId: %d, activeQuestionId: %d, courseId: %d, userId: %d, ipalId: %d, instructor: %@"
@@ -18,8 +21,14 @@
 
 -(NSDictionary *)getParametersForSubmission
 {
-    //To suppress warning only. This method is supposed to be empty, see implementation in question subclasses.
-    return @{};
-}
+    return @{@"answer_id": [NSNumber numberWithInt:self.answerId],
+             @"question_id": [NSNumber numberWithInt:self.questionId],
+            @"active_question_id": [NSNumber numberWithInt:self.activeQuestionId],
+             @"course_id": [NSNumber numberWithInt:self.courseId],
+             @"user_id": [NSNumber numberWithInt:self.userId],
+             @"ipal_id": [NSNumber numberWithInt:self.ipalId],
+             @"instructor": self.instructor,
+             @"submit": @"Submit"};
 
+}
 @end
