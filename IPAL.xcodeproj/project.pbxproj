@@ -27,6 +27,9 @@
 		8DE2682618CD0F2900B8D8AB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2682418CD0F2900B8D8AB /* InfoPlist.strings */; };
 		8DE2682818CD0F2900B8D8AB /* IPALTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2682718CD0F2900B8D8AB /* IPALTests.m */; };
 		C4BF8A92C3C44E77B3A7CCBE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8F56997F9A4FC0B1696400 /* libPods.a */; };
+		D22AEA7618D88CC200640864 /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D22AEA7518D88CC200640864 /* QuestionView.m */; };
+		D22AEA7B18D8921700640864 /* EssayQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D22AEA7A18D8921700640864 /* EssayQuestionView.m */; };
+		D22AEA7E18D916D700640864 /* MultipleChoiceQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D22AEA7D18D916D700640864 /* MultipleChoiceQuestionView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +74,12 @@
 		8DE2682318CD0F2900B8D8AB /* IPALTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IPALTests-Info.plist"; sourceTree = "<group>"; };
 		8DE2682518CD0F2900B8D8AB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8DE2682718CD0F2900B8D8AB /* IPALTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IPALTests.m; sourceTree = "<group>"; };
+		D22AEA7418D88CC200640864 /* QuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionView.h; sourceTree = "<group>"; };
+		D22AEA7518D88CC200640864 /* QuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionView.m; sourceTree = "<group>"; };
+		D22AEA7918D8921700640864 /* EssayQuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EssayQuestionView.h; sourceTree = "<group>"; };
+		D22AEA7A18D8921700640864 /* EssayQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EssayQuestionView.m; sourceTree = "<group>"; };
+		D22AEA7C18D916D700640864 /* MultipleChoiceQuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleChoiceQuestionView.h; sourceTree = "<group>"; };
+		D22AEA7D18D916D700640864 /* MultipleChoiceQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleChoiceQuestionView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +157,7 @@
 		8DE2680218CD0F2900B8D8AB /* IPAL */ = {
 			isa = PBXGroup;
 			children = (
+				D22AEA7318D88C9200640864 /* QuestionViews */,
 				8DBE427818CE9A9100BE5F50 /* QuestionModel */,
 				8DE2680B18CD0F2900B8D8AB /* AppDelegate.h */,
 				8DE2680C18CD0F2900B8D8AB /* AppDelegate.m */,
@@ -189,6 +199,19 @@
 				8DE2682418CD0F2900B8D8AB /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D22AEA7318D88C9200640864 /* QuestionViews */ = {
+			isa = PBXGroup;
+			children = (
+				D22AEA7418D88CC200640864 /* QuestionView.h */,
+				D22AEA7518D88CC200640864 /* QuestionView.m */,
+				D22AEA7918D8921700640864 /* EssayQuestionView.h */,
+				D22AEA7A18D8921700640864 /* EssayQuestionView.m */,
+				D22AEA7C18D916D700640864 /* MultipleChoiceQuestionView.h */,
+				D22AEA7D18D916D700640864 /* MultipleChoiceQuestionView.m */,
+			);
+			name = QuestionViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,8 +349,11 @@
 				8DBE427118CE96D200BE5F50 /* QuestionFactory.m in Sources */,
 				8DE2681318CD0F2900B8D8AB /* ViewController.m in Sources */,
 				8DE2680D18CD0F2900B8D8AB /* AppDelegate.m in Sources */,
+				D22AEA7E18D916D700640864 /* MultipleChoiceQuestionView.m in Sources */,
 				8DBE426E18CE95F600BE5F50 /* Question.m in Sources */,
 				8DBE427418CE9A7700BE5F50 /* MultipleChoiceQuestion.m in Sources */,
+				D22AEA7618D88CC200640864 /* QuestionView.m in Sources */,
+				D22AEA7B18D8921700640864 /* EssayQuestionView.m in Sources */,
 				8DBE426B18CE7DA100BE5F50 /* QuestionViewController.m in Sources */,
 				8DE2680918CD0F2900B8D8AB /* main.m in Sources */,
 				8DBE427718CE9A8300BE5F50 /* EssayQuestion.m in Sources */,

@@ -8,6 +8,23 @@
 
 #import "Question.h"
 
+@implementation Choice
+
+-(id) initWithValue:(NSString *)value withText:(NSString *)text {
+    self = [[Choice alloc] init];
+    if (self) {
+        _value = value;
+        _text = text;
+    }
+    return self;
+}
+
+-(NSString *) description {
+    return [NSString stringWithFormat:@"(%@: %@)", self.text, self.value];
+}
+
+@end
+
 @implementation Question
 
 NSString *const MULTIPLE_CHOICE = @"multichoice";

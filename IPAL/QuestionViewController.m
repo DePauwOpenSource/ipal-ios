@@ -11,6 +11,7 @@
 #import "EssayQuestionView.h"
 #import "Question.h"
 #import "AFNetworking.h"
+#import "MultipleChoiceQuestionView.h"
 
 @interface QuestionViewController ()
 
@@ -49,9 +50,9 @@
 - (QuestionView *)getQuestionViewFromQuestion:(Question *)question {
     CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
     if ([question.type isEqualToString:MULTIPLE_CHOICE]) {
-        return [[QuestionView alloc] initWithFrame:applicationFrame];
+        return [[MultipleChoiceQuestionView alloc] initWithFrame:applicationFrame withQuestion:question];
     } else {
-        return [[EssayQuestionView alloc] initWithFrame:applicationFrame];
+        return [[EssayQuestionView alloc] initWithFrame:applicationFrame withQuestion:question];
     }
 }
 

@@ -11,26 +11,25 @@
 
 @implementation QuestionView
 
-- (id)initWithFrame:(CGRect)frame
-{
+-(id) initWithFrame:(CGRect)frame withQuestion:(Question *)question {
     self = [super initWithFrame:frame];
-    
     if (self) {
-        // Initialization code
+        self.question = question;
         [self initElements];
     }
     return self;
 }
+
 
 -(void)setQuestion:(Question *)question {
     _question = question;
     [self refresh];
 }
 
-- (id) initWithCoder:(NSCoder *)aDecoder {
+- (id) initWithCoder:(NSCoder *)aDecoder withQuestion:(Question *)question {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        // Initialization code
+        self.question = question;
         [self initElements];
     }
     return self;
@@ -48,7 +47,7 @@
     self.questionText.adjustsFontSizeToFitWidth = YES;
     
     //resize the Label based on the text lengh
-    //[self.questionText sizeToFit];
+    
     [self addSubview:self.questionText];
     
     CGRect buttonFrame = CGRectMake(5, 400, 320, 40);
@@ -93,6 +92,7 @@
 
 -(void) refresh {
     [self.questionText setText:self.question.text];
+    //[self.questionText sizeToFit];
 }
 
 -(NSString *) getAnswerValue {

@@ -9,6 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "TFHpple.h"
 
+@interface Choice: NSObject
+
+@property NSString *value;
+@property NSString *text;
+
+- (id) initWithValue:(NSString *)value withText:(NSString *)text;
+
+@end
+
 @interface Question : NSObject
 extern NSString *const MULTIPLE_CHOICE;
 extern NSString *const ESSAY;

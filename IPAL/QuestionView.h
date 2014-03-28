@@ -14,6 +14,8 @@
  * Inits UI elements her
  */
 -(void) initElements;
+-(id) initWithCoder:(NSCoder *)aDecoder withQuestion:(Question *) question;
+-(id) initWithFrame:(CGRect)frame withQuestion:(Question *) question;
 
 @property (strong, nonatomic) Question *question;
 @property (strong, nonatomic) UILabel *questionText;

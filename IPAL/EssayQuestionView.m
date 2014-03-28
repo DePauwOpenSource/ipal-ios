@@ -17,14 +17,6 @@
 
 @implementation EssayQuestionView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
 
 - (void) initElements {
     //TODO: Improve the look and dynamic sizing of frame
