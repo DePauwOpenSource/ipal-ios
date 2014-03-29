@@ -49,10 +49,11 @@
 
 - (QuestionView *)getQuestionViewFromQuestion:(Question *)question {
     CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
+    CGRect questionViewFrame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, applicationFrame.size.width, applicationFrame.size.height - self.navigationController.navigationBar.frame.size.height);
     if ([question.type isEqualToString:MULTIPLE_CHOICE]) {
-        return [[MultipleChoiceQuestionView alloc] initWithFrame:applicationFrame withQuestion:question];
+        return [[MultipleChoiceQuestionView alloc] initWithFrame:questionViewFrame withQuestion:question];
     } else {
-        return [[EssayQuestionView alloc] initWithFrame:applicationFrame withQuestion:question];
+        return [[EssayQuestionView alloc] initWithFrame:questionViewFrame withQuestion:question];
     }
 }
 

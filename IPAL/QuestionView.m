@@ -20,12 +20,6 @@
     return self;
 }
 
-
--(void)setQuestion:(Question *)question {
-    _question = question;
-    [self refresh];
-}
-
 - (id) initWithCoder:(NSCoder *)aDecoder withQuestion:(Question *)question {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -35,22 +29,33 @@
     return self;
 }
 
+#define FONT_SIZE 15.0f
+#define QUESTION_LABEL_HORIZONTAL_PAD 10
+#define QUESTION_LABEL_VERTICAL_PAD 10
+#define Y_AFTER_NAV_BAR 75
+#define SUBMIT_BUTTON_HEIGHT 40
+
+
 -(void) initElements {
-    //TODO: better layout, auto resizing
     self.backgroundColor = [UIColor whiteColor];
-    NSLog(@"here");
-    CGRect labelFrame = CGRectMake(5, 70, self.bounds.size.width, 80);
-    _questionText = [[UILabel alloc] initWithFrame:labelFrame];
-    [self.questionText setText:@"Question Text"];
-    //self.questionText.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    //Initalize question label with a zero frame. Set the attributedText.
+    self.questionText = [[UILabel alloc] initWithFrame:CGRectZero];
+    NSAttributedString *text = [self getAttributedQuestionText];
+
+    self.questionText.attributedText = text;
     self.questionText.numberOfLines = 0;
-    self.questionText.adjustsFontSizeToFitWidth = YES;
-    
-    //resize the Label based on the text lengh
-    
     [self addSubview:self.questionText];
     
-    CGRect buttonFrame = CGRectMake(5, 400, 320, 40);
+    //resize the question label frame to fit the text length dynamically
+    CGSize labelSize = CGSizeZero;
+    CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(self.frame.size.width -2 *QUESTION_LABEL_HORIZONTAL_PAD, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+    labelSize = boundingRect.size;
+    self.questionText.frame = CGRectMake(QUESTION_LABEL_HORIZONTAL_PAD,
+                                         Y_AFTER_NAV_BAR + QUESTION_LABEL_VERTICAL_PAD,
+                             self.frame.size.width - 2*QUESTION_LABEL_HORIZONTAL_PAD, ceilf(labelSize.height));
+    //Submit button
+    CGRect buttonFrame = CGRectMake(QUESTION_LABEL_HORIZONTAL_PAD, self.frame.origin.y + self.frame.size.height - SUBMIT_BUTTON_HEIGHT , self.frame.size.width, SUBMIT_BUTTON_HEIGHT);
     _submitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.submitButton.frame = buttonFrame;
     [self.submitButton setTitle:@"Submit" forState:UIControlStateNormal];
@@ -59,8 +64,23 @@
      forControlEvents:UIControlEventTouchUpInside];
     [self.submitButton setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
     [self addSubview:self.submitButton];
+}
+
+-(NSAttributedString *) getAttributedQuestionText {
+    if (!self.question) {
+        return [[NSAttributedString alloc] initWithString:@""];
+    }
+    NSMutableAttributedString *questionText = [[NSMutableAttributedString alloc] initWithString:self.question.text];
+    [questionText setAttributes:@{NSBackgroundColorAttributeName:[UIColor whiteColor]} range:NSMakeRange(0, questionText.length)];
+    [questionText setAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]} range:NSMakeRange(0, questionText.length)];
     
-    [self refresh];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+    [questionText setAttributes:@{NSParagraphStyleAttributeName:paragraphStyle} range:NSMakeRange(0, questionText.length)];
+    
+    [questionText setAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:FONT_SIZE]} range: NSMakeRange(0, questionText.length)];
+    return questionText;
+
 }
 
 -(void)submitQuestion {
@@ -71,6 +91,7 @@
     //NSLog([NSString stringWithFormat:@"params: %@", parameters]);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSLog(@"params: %@", parameters);
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Question Submitted"
                                                                message:@"Your answer is submitted successfully"
@@ -88,11 +109,6 @@
         [failAlert show];
     }];
     NSLog(@"Question submitted...");
-}
-
--(void) refresh {
-    [self.questionText setText:self.question.text];
-    //[self.questionText sizeToFit];
 }
 
 -(NSString *) getAnswerValue {

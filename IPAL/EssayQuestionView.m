@@ -17,18 +17,26 @@
 
 @implementation EssayQuestionView
 
+#define FONT_SIZE 12.0f
+#define TEXTVIEW_HORIZONTAL_PAD 10
+#define TEXTVIEW_VERTICAL_PAD 10
 
 - (void) initElements {
     //TODO: Improve the look and dynamic sizing of frame
     [super initElements];
-    CGRect textViewFrame = CGRectMake(0, 150, self.bounds.size.width, 200);
-    _answerText = [[UITextView alloc] initWithFrame:textViewFrame];
+    CGRect textViewFrame = CGRectMake(TEXTVIEW_HORIZONTAL_PAD, self.questionText.frame.origin.y + self.questionText.frame.size.height + TEXTVIEW_VERTICAL_PAD,
+                              self.bounds.size.width - 2*TEXTVIEW_HORIZONTAL_PAD, self.frame.size.height - self.questionText.frame.origin.y - self.questionText.bounds.size.height - self.submitButton.bounds.size.height);
+    self.answerText = [[UITextView alloc] initWithFrame:textViewFrame];
     [self.answerText setText:@"Answer here"];
     [self addSubview:self.answerText];
-    self.answerText.layer.borderWidth = 1.0f;
-    self.answerText.layer.borderColor = [[UIColor grayColor] CGColor];
-    self.answerText.font = [UIFont fontWithName:@"Helvetica" size:12];
-    self.answerText.font = [UIFont boldSystemFontOfSize:12];
+    [self.answerText.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor]];
+    [self.answerText.layer setBorderWidth:0.7f];
+    
+    //Rounded corner border for answer text view
+    self.answerText.layer.cornerRadius = 5;
+    self.answerText.clipsToBounds = YES;
+    
+    self.answerText.font = [UIFont systemFontOfSize:12];
     self.answerText.backgroundColor = [UIColor whiteColor];
     self.answerText.scrollEnabled = YES;
     self.answerText.pagingEnabled = YES;
