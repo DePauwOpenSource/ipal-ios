@@ -11,7 +11,7 @@
 
 @interface MultipleChoiceQuestionView()
 
-@property (nonatomic, strong) UISegmentedControl *choicesButton;
+@property (nonatomic, strong) UITableView *choicesView;
 
 @end
 
@@ -19,37 +19,55 @@
 
 - (void) initElements {
     [super initElements];
+    self.choicesView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
+    self.choicesView.dataSource = self;
+    self.choicesView.delegate = self;
+    CGRect frame = CGRectMake(0, 200, self.bounds.size.width, 200);
+    self.choicesView.frame = frame;
+    [self addSubview:self.choicesView];
+    
+    //NSLog(self.choicesButton);
+    //[self addSubview:self.choicesButton];
+}
+
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSArray *choices = ((MultipleChoiceQuestion *)self.question).choices;
+    return [choices count]+1;
+}
+
+#define FONT_SIZE 11.0f
+#define CELL_CONTENT_WIDTH 320.0f
+#define CELL_CONTENT_MARGIN 1.0f
+
+-(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    UILabel *label = nil;
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"Cell"];
+        label = [[UILabel alloc] initWithFrame:CGRectZero];
+        [label setNumberOfLines:0];
+        [label setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+        [label setTag:1];
+        [[cell contentView] addSubview:label];
+    }
     NSArray *choices = ((MultipleChoiceQuestion *)self.question).choices;
     NSMutableArray *choiceTexts = [[NSMutableArray alloc] init];
     for (Choice *c in choices) {
-        NSLog([NSString stringWithFormat:@"Text: %@",c.text]);
         [choiceTexts addObject:c.text];
     }
-    //NSLog(choiceTexts);
-    NSArray *text = [NSArray arrayWithObjects: @"text", @"Control",@"iPhone", nil];
-    _choicesButton = [[UISegmentedControl alloc] initWithItems:choiceTexts];
-    self.choicesButton.frame = CGRectMake(0, 200, 300, 150);
-    //self.choicesButton.tintColor = [UIColor blackColor];
-    self.choicesButton.selectedSegmentIndex = 1;
-    self.choicesButton.backgroundColor = [UIColor whiteColor];
-    self.choicesButton.transform = CGAffineTransformMakeRotation(M_PI / 2.0);
+    [choiceTexts addObject:@"Gov. Andrew M. Cuomo"];
+    NSString *text = [choiceTexts objectAtIndex:[indexPath row]];
+    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeCharacterWrap];
+    CGFloat height = MAX(size.height, 15.0f);
     
-    //Rotating the text inside each segment
-    NSArray *arr = [self.choicesButton subviews];
-    for (int i=0; i < [arr count]; i++) {
-        UIView *v = (UIView *) [arr objectAtIndex:i];
-        NSArray *subArr = [v subviews];
-        for (int j=0; j< [subArr count]; j++) {
-            if ([[subArr objectAtIndex:j] isKindOfClass:[UILabel class]]) {
-                UILabel *l = (UILabel *) [subArr objectAtIndex:j];
-                l.transform = CGAffineTransformMakeRotation(-M_PI / 2.0);
-            }
-        }
+    if (!label) {
+        label = (UILabel *) [cell viewWithTag:1];
     }
-
-    NSLog(@"Segmeted");
-    //NSLog(self.choicesButton);
-    [self addSubview:self.choicesButton];
+    [label setText:text];
+    [label setFrame:CGRectMake(CELL_CONTENT_MARGIN, CELL_CONTENT_MARGIN, CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), height)];
+    
+    return cell;
 }
 
 /*

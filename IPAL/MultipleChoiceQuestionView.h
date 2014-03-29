@@ -8,6 +8,6 @@
 
 #import "QuestionView.h"
 
-@interface MultipleChoiceQuestionView : QuestionView
+@interface MultipleChoiceQuestionView : QuestionView <UITableViewDataSource, UITableViewDelegate>
 
 @end
