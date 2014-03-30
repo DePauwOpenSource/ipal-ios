@@ -12,6 +12,7 @@
 #import "Question.h"
 #import "AFNetworking.h"
 #import "MultipleChoiceQuestionView.h"
+#import "UserPreferences.h"
 
 @interface QuestionViewController ()
 
@@ -39,10 +40,14 @@
 }
 
 - (void)loadQuestion {
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://54.218.0.148/moodle/mod/ipal/tempview.php?p=125&user=user"]];
+    NSString *moodleUrl = [UserPreferences getUrl];
+    NSString *username = [UserPreferences getUsername];
+    NSString *questionUrl = [NSString stringWithFormat:@"%@/mod/ipal/tempview.php?p=%d&user=%@", moodleUrl, self.passcode, username];
+    NSLog(@"Loading question from url %@", questionUrl);
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:questionUrl]];
     Question *question = [QuestionFactory createNewQuestionWithData:data];
     QuestionView *questionView = [self getQuestionViewFromQuestion:question];
-    NSLog(@"%@", question);
+    NSLog(@"Question Loaded: \n %@", question);
     questionView.question = question;
     self.view = questionView;
 }

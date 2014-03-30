@@ -27,7 +27,7 @@
     
     if([[type text] isEqualToString:@"multichoice"])
     {
-        NSArray *textElement = [doc searchWithXPathQuery:@"//legend/p"];
+        NSArray *textElement = [doc searchWithXPathQuery:@"//legend"];
         TFHppleElement *text = textElement[0];
         NSLog(@"Found MCQ");
         NSMutableArray *choices = [[NSMutableArray alloc] init];
@@ -35,11 +35,13 @@
         for(TFHppleElement *e in elements)
         {
             TFHppleElement *input =[e firstChildWithTagName:@"input"];
-            NSString *choiceValue = [input objectForKey:@"value"];
-            TFHppleElement *label =[e firstChildWithTagName:@"label"];
-            NSString *choiceText = [label text];
-            Choice *choice = [[Choice alloc] initWithValue:choiceValue withText:choiceText];
-            [choices addObject:choice];
+            if (input) {
+                NSString *choiceValue = [input objectForKey:@"value"];
+                TFHppleElement *label =[e firstChildWithTagName:@"label"];
+                NSString *choiceText = [label text];
+                Choice *choice = [[Choice alloc] initWithValue:choiceValue withText:choiceText];
+                [choices addObject:choice];
+            }
         }
         NSLog(@"Choices populated");
         question = [[MultipleChoiceQuestion alloc] initWithText:[text text] withChoices:choices];

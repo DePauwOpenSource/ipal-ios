@@ -24,10 +24,17 @@
 }
 
 +(NSArray *) getPossibleUrls:(NSString *)url {
+    NSMutableArray *urls = [[NSMutableArray alloc] initWithCapacity:2];
     NSString *strippedUrl = [MoodleUrlHelper stripUrl:url];
     NSString *http = [NSString stringWithFormat:@"http://%@/", strippedUrl];
     NSString *https = [NSString stringWithFormat:@"https://%@/", strippedUrl];
-    return @[http, https];
+    if ([self.class isValidUrl:http]) {
+        [urls insertObject:http atIndex:0];
+    }
+    if ([self.class isValidUrl:https]) {
+        [urls insertObject:https atIndex:1];
+    }
+    return urls;
 }
 
 //strip url of protocols ("http://" or "https://") and the last slash

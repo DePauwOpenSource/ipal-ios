@@ -9,10 +9,11 @@
 #import "ViewController.h"
 #import "MoodleUrlHelper.h"
 #import "UserPreferences.h"
+#import "QuestioNViewController.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *urlField;
-
+@property int passcode;
 @end
 
 @implementation ViewController
@@ -20,6 +21,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.passcode = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -29,6 +31,10 @@
     //Populate url from NSUserDefaults
     self.urlField.text = [UserPreferences getUrl];
     self.usernameField.text = [UserPreferences getUsername];
+    self.usernameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,8 +46,11 @@
 - (IBAction)loginButtonPressed:(id)sender
 {
     NSString *urlText = self.urlField.text;
-    //saving moodle url in NSUserDefault
-    if (![MoodleUrlHelper isValidUrl:urlText]) {
+    [UserPreferences saveUrl:urlText];
+    
+    NSArray *possibleUrls = [MoodleUrlHelper getPossibleUrls:urlText];
+    NSLog(@"Possible Urls: %@", possibleUrls);
+    if ([possibleUrls count] == 0) {
         NSLog(@"URL is invalid");
         UIAlertView *loginFailedAlert = [[UIAlertView alloc] initWithTitle:@"Invalid URL"
                                                                    message:@"Please check your url again."
@@ -50,12 +59,7 @@
                                                          otherButtonTitles:nil];
         [loginFailedAlert show];
         return;
-    } else {
-        NSLog(@"URL is valid");
     }
-    [UserPreferences saveUrl:urlText];
-    NSArray *possibleUrls = [MoodleUrlHelper getPossibleUrls:urlText];
-    NSLog(@"Possible Urls: %@", possibleUrls);
     
     NSString *username = self.usernameField.text;
     NSString *password = self.passwordField.text;
@@ -88,6 +92,7 @@
             } else {
                 NSLog(@"Login succeeded.");
                 //Popup modal with textfield
+                [UserPreferences saveUrl:url];
                 [self showPasscodeAlert];
                 
                 //[self performSegueWithIdentifier:@"PushMCQView" sender:sender];
@@ -116,32 +121,40 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSString *expectedPasscode = @"123"; //TODO: Get actual passcode
+    //NSString *expectedPasscode = @"123"; //TODO: Get actual passcode
     
     if (buttonIndex == 1) {
-        NSString *passcode = [alertView textFieldAtIndex:0].text;
-        NSLog(@"Got passcode: %@", passcode);
-        if([passcode isEqualToString:expectedPasscode])
-        {
-            NSLog(@"Matching passcodes.");
+        NSString *passcodeString = [alertView textFieldAtIndex:0].text;
+        NSLog(@"Got passcode: %@", passcodeString);
+        self.passcode = [passcodeString intValue];
+        if (self.passcode == 0) {
+            NSLog(@"Invalid passcode %@", passcodeString);
+            UIAlertView *passcodeFailed = [[UIAlertView alloc] initWithTitle:@"Passcode Failed"
+                                                                       message:@"Invalid passcode. Please enter the correct passcode provided by the instructor"
+                                                                      delegate:nil
+                                                             cancelButtonTitle:@"Ok"
+                                                             otherButtonTitles:nil];
+            [passcodeFailed show];
+        } else {
             UIBarButtonItem *newBackButton =
             [[UIBarButtonItem alloc] initWithTitle:@"Logout"
                                              style:UIBarButtonItemStylePlain
                                             target:nil
                                             action:nil];
             [[self navigationItem] setBackBarButtonItem:newBackButton];
-            
             [self performSegueWithIdentifier:@"PushQuestionView" sender:self];
         }
-        else{
-            NSLog(@"Passcodes mismatch: %@ / %@", passcode, expectedPasscode);
-            UIAlertView *passcodeFailed = [[UIAlertView alloc] initWithTitle:@"Passcode Failed"
-                                                                       message:@"Please ensure that you enter the most up-to-date passcode for the poll."
-                                                                      delegate:nil
-                                                             cancelButtonTitle:@"Ok"
-                                                             otherButtonTitles:nil];
-            [passcodeFailed show];
-        }
+    }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"PushQuestionView"])
+    {
+        NSLog(@"Preparing for question view controller");
+        NSLog(@"Setting passcode to %d", self.passcode);
+        QuestionViewController *destViewController = segue.destinationViewController;
+        destViewController.passcode = self.passcode;
     }
 }
 
