@@ -13,6 +13,7 @@
 //return a list consisting of http and https versions of the provided url.
 //the ViewController will try both of these urls when logging in.
 + (NSArray *) getPossibleUrls:(NSString *)url;
++(NSString *) getSubmitUrlWithPasscode:(int) passcode;
 
 
 @end

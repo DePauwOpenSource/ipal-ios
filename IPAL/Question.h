@@ -32,6 +32,7 @@ extern NSString *const NO_CURRENT;
 @property int courseId;
 @property int userId;
 @property int ipalId;
+@property int passcode;
 @property (nonatomic, strong) NSString *instructor;
 
 - (NSDictionary *) getParametersForSubmission;

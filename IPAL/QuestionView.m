@@ -8,7 +8,7 @@
 
 #import "QuestionView.h"
 #import "AFNetworking.h"
-
+#import "MoodleUrlHelper.h"
 @implementation QuestionView
 
 -(id) initWithFrame:(CGRect)frame withQuestion:(Question *)question {
@@ -86,8 +86,8 @@
     NSLog(@"Submitting question...");
     //add code to submit question
     NSDictionary *parameters = [self.question getParametersForSubmission];
-    NSString *urlString = @"http://54.218.0.148/moodle/mod/ipal/tempview.php?p=125&user=user";
-    //NSLog([NSString stringWithFormat:@"params: %@", parameters]);
+    NSString *urlString = [MoodleUrlHelper getSubmitUrlWithPasscode:self.question.passcode];
+    NSLog(@"URL: %@", urlString);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSLog(@"params: %@", parameters);
@@ -99,7 +99,7 @@
                                                      otherButtonTitles:nil];
         [successAlert show];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //NSLog([NSString stringWithFormat:@"Error: %@", error]);
+        NSLog(@"Error: %@", error);
         UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:@"Question Submitted Failed"
                                                                message:@"Your answer is not submitted. Please try again!"
                                                               delegate:nil

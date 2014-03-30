@@ -12,7 +12,7 @@
 #import "Question.h"
 #import "AFNetworking.h"
 #import "MultipleChoiceQuestionView.h"
-#import "UserPreferences.h"
+#import "MoodleUrlHelper.h"
 
 @interface QuestionViewController ()
 
@@ -40,12 +40,11 @@
 }
 
 - (void)loadQuestion {
-    NSString *moodleUrl = [UserPreferences getUrl];
-    NSString *username = [UserPreferences getUsername];
-    NSString *questionUrl = [NSString stringWithFormat:@"%@/mod/ipal/tempview.php?p=%d&user=%@", moodleUrl, self.passcode, username];
+    NSString *questionUrl = [MoodleUrlHelper getSubmitUrlWithPasscode:self.passcode];
     NSLog(@"Loading question from url %@", questionUrl);
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:questionUrl]];
     Question *question = [QuestionFactory createNewQuestionWithData:data];
+    question.passcode = self.passcode;
     QuestionView *questionView = [self getQuestionViewFromQuestion:question];
     NSLog(@"Question Loaded: \n %@", question);
     questionView.question = question;

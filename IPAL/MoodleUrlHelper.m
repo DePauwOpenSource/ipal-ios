@@ -7,7 +7,7 @@
 //
 
 #import "MoodleUrlHelper.h"
-
+#import "UserPreferences.h"
 @implementation MoodleUrlHelper
 
 +(bool) isValidUrl:(NSString *) url {
@@ -54,6 +54,13 @@
     }
     //NSLog(@"Stripped %@ into %@", url, strippedUrl);
     return strippedUrl;
+}
+
++(NSString *) getSubmitUrlWithPasscode:(int) passcode {
+    NSString *moodleUrl = [UserPreferences getUrl];
+    NSString *username = [UserPreferences getUsername];
+    NSString *questionUrl = [NSString stringWithFormat:@"%@mod/ipal/tempview.php?p=%d&user=%@", moodleUrl, passcode, username];
+    return questionUrl;
 }
 
 @end
