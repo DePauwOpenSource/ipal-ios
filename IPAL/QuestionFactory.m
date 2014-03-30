@@ -27,8 +27,10 @@
     
     if([[type text] isEqualToString:@"multichoice"])
     {
-        NSArray *textElement = [doc searchWithXPathQuery:@"//legend"];
-        TFHppleElement *text = textElement[0];
+        TFHppleElement *textElement =[doc peekAtSearchWithXPathQuery:@"//legend"];
+        if (![textElement text]) {
+            textElement = [textElement firstChild];
+        }
         NSLog(@"Found MCQ");
         NSMutableArray *choices = [[NSMutableArray alloc] init];
         elements = [doc searchWithXPathQuery:@"//span"];
@@ -44,7 +46,7 @@
             }
         }
         NSLog(@"Choices populated");
-        question = [[MultipleChoiceQuestion alloc] initWithText:[text text] withChoices:choices];
+        question = [[MultipleChoiceQuestion alloc] initWithText:[textElement text] withChoices:choices];
     }
     else if([[type text] isEqualToString:@"essay"])
     {

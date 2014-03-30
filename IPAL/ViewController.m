@@ -31,6 +31,9 @@
     //Populate url from NSUserDefaults
     self.urlField.text = [UserPreferences getUrl];
     self.usernameField.text = [UserPreferences getUsername];
+    self.passwordField.text = @"bitnami";
+    
+    //Show an "x" to clear text in the text field
     self.usernameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
