@@ -30,6 +30,8 @@
 		D22AEA7618D88CC200640864 /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D22AEA7518D88CC200640864 /* QuestionView.m */; };
 		D22AEA7B18D8921700640864 /* EssayQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D22AEA7A18D8921700640864 /* EssayQuestionView.m */; };
 		D22AEA7E18D916D700640864 /* MultipleChoiceQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D22AEA7D18D916D700640864 /* MultipleChoiceQuestionView.m */; };
+		D235DF3518E8566900D4E209 /* UserPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = D235DF3418E8566900D4E209 /* UserPreferences.m */; };
+		D2FDD21818E7B02000611B05 /* MoodleUrlHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FDD21718E7B02000611B05 /* MoodleUrlHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +82,10 @@
 		D22AEA7A18D8921700640864 /* EssayQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EssayQuestionView.m; sourceTree = "<group>"; };
 		D22AEA7C18D916D700640864 /* MultipleChoiceQuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultipleChoiceQuestionView.h; sourceTree = "<group>"; };
 		D22AEA7D18D916D700640864 /* MultipleChoiceQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleChoiceQuestionView.m; sourceTree = "<group>"; };
+		D235DF3318E8566900D4E209 /* UserPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreferences.h; sourceTree = "<group>"; };
+		D235DF3418E8566900D4E209 /* UserPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreferences.m; sourceTree = "<group>"; };
+		D2FDD21618E7B02000611B05 /* MoodleUrlHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoodleUrlHelper.h; sourceTree = "<group>"; };
+		D2FDD21718E7B02000611B05 /* MoodleUrlHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoodleUrlHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +174,10 @@
 				8DE2680318CD0F2900B8D8AB /* Supporting Files */,
 				8DBE426918CE7DA100BE5F50 /* QuestionViewController.h */,
 				8DBE426A18CE7DA100BE5F50 /* QuestionViewController.m */,
+				D2FDD21618E7B02000611B05 /* MoodleUrlHelper.h */,
+				D2FDD21718E7B02000611B05 /* MoodleUrlHelper.m */,
+				D235DF3318E8566900D4E209 /* UserPreferences.h */,
+				D235DF3418E8566900D4E209 /* UserPreferences.m */,
 			);
 			path = IPAL;
 			sourceTree = "<group>";
@@ -351,12 +361,14 @@
 				8DE2680D18CD0F2900B8D8AB /* AppDelegate.m in Sources */,
 				D22AEA7E18D916D700640864 /* MultipleChoiceQuestionView.m in Sources */,
 				8DBE426E18CE95F600BE5F50 /* Question.m in Sources */,
+				D235DF3518E8566900D4E209 /* UserPreferences.m in Sources */,
 				8DBE427418CE9A7700BE5F50 /* MultipleChoiceQuestion.m in Sources */,
 				D22AEA7618D88CC200640864 /* QuestionView.m in Sources */,
 				D22AEA7B18D8921700640864 /* EssayQuestionView.m in Sources */,
 				8DBE426B18CE7DA100BE5F50 /* QuestionViewController.m in Sources */,
 				8DE2680918CD0F2900B8D8AB /* main.m in Sources */,
 				8DBE427718CE9A8300BE5F50 /* EssayQuestion.m in Sources */,
+				D2FDD21818E7B02000611B05 /* MoodleUrlHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
