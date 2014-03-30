@@ -29,6 +29,7 @@
 
 NSString *const MULTIPLE_CHOICE = @"multichoice";
 NSString *const ESSAY = @"essay";
+NSString *const NO_CURRENT = @"nocurrentquestion";
 
 -(NSString *) description
 {

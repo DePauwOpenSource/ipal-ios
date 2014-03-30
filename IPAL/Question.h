@@ -21,7 +21,7 @@
 @interface Question : NSObject
 extern NSString *const MULTIPLE_CHOICE;
 extern NSString *const ESSAY;
-
+extern NSString *const NO_CURRENT;
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *text;
 

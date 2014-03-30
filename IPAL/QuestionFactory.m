@@ -34,8 +34,6 @@
         elements = [doc searchWithXPathQuery:@"//span"];
         for(TFHppleElement *e in elements)
         {
-            
-
             TFHppleElement *input =[e firstChildWithTagName:@"input"];
             NSString *choiceValue = [input objectForKey:@"value"];
             TFHppleElement *label =[e firstChildWithTagName:@"label"];
@@ -51,6 +49,11 @@
         NSArray *elements = [doc searchWithXPathQuery:@"//legend[1]"];
         TFHppleElement *text = elements[0];
         question = [[EssayQuestion alloc] initWithText:[text text]];
+    } else { //If there's no current question, create a new Question object with choices empty
+        question = [[Question alloc] init];
+        question.text = @"No current question. The instructor have not started the poll or your passcode is invalid";
+        question.type = NO_CURRENT;
+        return question;
     }
     
     //populate properties from hidden input

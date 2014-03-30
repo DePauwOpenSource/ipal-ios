@@ -52,8 +52,10 @@
     CGRect questionViewFrame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, applicationFrame.size.width, applicationFrame.size.height - self.navigationController.navigationBar.frame.size.height);
     if ([question.type isEqualToString:MULTIPLE_CHOICE]) {
         return [[MultipleChoiceQuestionView alloc] initWithFrame:questionViewFrame withQuestion:question];
-    } else {
+    } else if ([question.type isEqualToString:ESSAY]) {
         return [[EssayQuestionView alloc] initWithFrame:questionViewFrame withQuestion:question];
+    } else {
+        return [[QuestionView alloc] initWithFrame:questionViewFrame withQuestion:question];
     }
 }
 

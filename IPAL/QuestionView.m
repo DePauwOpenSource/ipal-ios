@@ -29,7 +29,7 @@
     return self;
 }
 
-#define FONT_SIZE 15.0f
+#define FONT_SIZE 14.0f
 #define QUESTION_LABEL_HORIZONTAL_PAD 10
 #define QUESTION_LABEL_VERTICAL_PAD 10
 #define Y_AFTER_NAV_BAR 75
@@ -82,7 +82,6 @@
     return questionText;
 
 }
-
 -(void)submitQuestion {
     NSLog(@"Submitting question...");
     //add code to submit question
@@ -109,10 +108,6 @@
         [failAlert show];
     }];
     NSLog(@"Question submitted...");
-}
-
--(NSString *) getAnswerValue {
-    return @"";
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
