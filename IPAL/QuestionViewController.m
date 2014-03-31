@@ -13,6 +13,7 @@
 #import "AFNetworking.h"
 #import "MultipleChoiceQuestionView.h"
 #import "MoodleUrlHelper.h"
+#import "ProgressHUD.h"
 
 @interface QuestionViewController ()
 
@@ -27,7 +28,13 @@
 }
 
 -(void) loadView {
-    [self loadQuestion];
+    self.view = [self getQuestionView];
+    if (self.view == NULL) {
+        CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
+        self.view = [[UIView alloc] initWithFrame:applicationFrame];
+        self.view.backgroundColor = [UIColor whiteColor];
+        [ProgressHUD showError:@"Unable to load question. Check your connection"];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,22 +43,46 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)getQuestionFromServer:(UIBarButtonItem *)sender {
-    [self loadQuestion];
+    [ProgressHUD show:@""];
+    /*
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        QuestionView *newQuestionView = [self getQuestionView];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (newQuestionView) {
+                [ProgressHUD dismiss];
+                self.view = newQuestionView;
+            } else {
+                [ProgressHUD showError:@"Unable to load question. Check your connection"];
+            }
+        });
+    });*/
+    QuestionView *newQuestionView = [self getQuestionView];
+    if (newQuestionView) {
+        self.view = newQuestionView;
+        [ProgressHUD dismiss];
+    } else {
+        [ProgressHUD showError:@"Unable to load question. Check your connection"];
+    }
 }
 
-- (void)loadQuestion {
+- (QuestionView *)getQuestionView {
+    QuestionView *questionView = NULL;
     NSString *questionUrl = [MoodleUrlHelper getSubmitUrlWithPasscode:self.passcode];
     NSLog(@"Loading question from url %@", questionUrl);
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:questionUrl]];
-    Question *question = [QuestionFactory createNewQuestionWithData:data];
-    question.passcode = self.passcode;
-    QuestionView *questionView = [self getQuestionViewFromQuestion:question];
-    NSLog(@"Question Loaded: \n %@", question);
-    questionView.question = question;
-    self.view = questionView;
+    if (data) {
+        [ProgressHUD dismiss];
+        Question *question = [QuestionFactory createNewQuestionWithData:data];
+        question.passcode = self.passcode;
+        questionView = [self createQuestionViewFromQuestion:question];
+        NSLog(@"Question Loaded: \n %@", question);
+        questionView.question = question;
+        self.view = questionView;
+    }
+    return questionView;
 }
 
-- (QuestionView *)getQuestionViewFromQuestion:(Question *)question {
+- (QuestionView *)createQuestionViewFromQuestion:(Question *)question {
     CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
     CGRect questionViewFrame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, applicationFrame.size.width, applicationFrame.size.height - self.navigationController.navigationBar.frame.size.height);
     if ([question.type isEqualToString:MULTIPLE_CHOICE]) {

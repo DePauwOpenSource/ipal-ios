@@ -31,6 +31,8 @@
 		D22AEA7B18D8921700640864 /* EssayQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D22AEA7A18D8921700640864 /* EssayQuestionView.m */; };
 		D22AEA7E18D916D700640864 /* MultipleChoiceQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D22AEA7D18D916D700640864 /* MultipleChoiceQuestionView.m */; };
 		D235DF3518E8566900D4E209 /* UserPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = D235DF3418E8566900D4E209 /* UserPreferences.m */; };
+		D235DF3A18E984FD00D4E209 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D235DF3718E984FD00D4E209 /* ProgressHUD.bundle */; };
+		D235DF3B18E984FD00D4E209 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D235DF3918E984FD00D4E209 /* ProgressHUD.m */; };
 		D2FDD21818E7B02000611B05 /* MoodleUrlHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FDD21718E7B02000611B05 /* MoodleUrlHelper.m */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +86,9 @@
 		D22AEA7D18D916D700640864 /* MultipleChoiceQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleChoiceQuestionView.m; sourceTree = "<group>"; };
 		D235DF3318E8566900D4E209 /* UserPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreferences.h; sourceTree = "<group>"; };
 		D235DF3418E8566900D4E209 /* UserPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreferences.m; sourceTree = "<group>"; };
+		D235DF3718E984FD00D4E209 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
+		D235DF3818E984FD00D4E209 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		D235DF3918E984FD00D4E209 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
 		D2FDD21618E7B02000611B05 /* MoodleUrlHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoodleUrlHelper.h; sourceTree = "<group>"; };
 		D2FDD21718E7B02000611B05 /* MoodleUrlHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoodleUrlHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,6 +168,7 @@
 		8DE2680218CD0F2900B8D8AB /* IPAL */ = {
 			isa = PBXGroup;
 			children = (
+				D235DF3618E984FD00D4E209 /* ProgressHUD */,
 				D22AEA7318D88C9200640864 /* QuestionViews */,
 				8DBE427818CE9A9100BE5F50 /* QuestionModel */,
 				8DE2680B18CD0F2900B8D8AB /* AppDelegate.h */,
@@ -222,6 +228,16 @@
 				D22AEA7D18D916D700640864 /* MultipleChoiceQuestionView.m */,
 			);
 			name = QuestionViews;
+			sourceTree = "<group>";
+		};
+		D235DF3618E984FD00D4E209 /* ProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				D235DF3718E984FD00D4E209 /* ProgressHUD.bundle */,
+				D235DF3818E984FD00D4E209 /* ProgressHUD.h */,
+				D235DF3918E984FD00D4E209 /* ProgressHUD.m */,
+			);
+			path = ProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +318,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D235DF3A18E984FD00D4E209 /* ProgressHUD.bundle in Resources */,
 				8DE2681518CD0F2900B8D8AB /* Images.xcassets in Resources */,
 				8DE2680718CD0F2900B8D8AB /* InfoPlist.strings in Resources */,
 				8DE2681018CD0F2900B8D8AB /* Main.storyboard in Resources */,
@@ -366,6 +383,7 @@
 				D22AEA7618D88CC200640864 /* QuestionView.m in Sources */,
 				D22AEA7B18D8921700640864 /* EssayQuestionView.m in Sources */,
 				8DBE426B18CE7DA100BE5F50 /* QuestionViewController.m in Sources */,
+				D235DF3B18E984FD00D4E209 /* ProgressHUD.m in Sources */,
 				8DE2680918CD0F2900B8D8AB /* main.m in Sources */,
 				8DBE427718CE9A8300BE5F50 /* EssayQuestion.m in Sources */,
 				D2FDD21818E7B02000611B05 /* MoodleUrlHelper.m in Sources */,

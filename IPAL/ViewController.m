@@ -10,6 +10,7 @@
 #import "MoodleUrlHelper.h"
 #import "UserPreferences.h"
 #import "QuestionViewController.h"
+#import "ProgressHUD.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *urlField;
@@ -48,6 +49,13 @@
 
 - (IBAction)loginButtonPressed:(id)sender
 {
+    [ProgressHUD show:@"Logging in"];
+    
+    // minimize keyboard
+    [self.usernameField resignFirstResponder];
+    [self.passwordField resignFirstResponder];
+    [self.urlField resignFirstResponder];
+    
     NSString *urlText = self.urlField.text;
     [UserPreferences saveUrl:urlText];
     
@@ -67,7 +75,8 @@
     NSString *username = self.usernameField.text;
     NSString *password = self.passwordField.text;
     [UserPreferences saveUsername:username];
-    for (NSString *url in possibleUrls) {
+    for (int i=0; i< [possibleUrls count]; i++) {
+        NSString *url = [possibleUrls objectAtIndex:i];
         NSString *loginUrl = [url stringByAppendingString:@"login/index.php"];
         NSLog(@"Attempting to log in with url %@...", loginUrl);
         
@@ -86,13 +95,9 @@
             //Sample logic to check login status
             if ([operation.responseString rangeOfString:@"You are logged in as"].location == NSNotFound) {
                 NSLog(@"Log in failed: Username/password mismatch.");
-                UIAlertView *loginFailedAlert = [[UIAlertView alloc] initWithTitle:@"Login Failed"
-                                                                           message:@"Username and password did not match."
-                                                                          delegate:nil
-                                                                 cancelButtonTitle:@"Ok"
-                                                                 otherButtonTitles:nil];
-                [loginFailedAlert show];
+                [ProgressHUD showError:@"Login failed. Please check your username and password"];
             } else {
+                [ProgressHUD dismiss];
                 NSLog(@"Login succeeded.");
                 //Popup modal with textfield
                 [UserPreferences saveUrl:url];
@@ -101,7 +106,11 @@
                 //[self performSegueWithIdentifier:@"PushMCQView" sender:sender];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
+            NSLog(@"login failed with url %@", url);
+            if (i == [possibleUrls count]-1) {
+                //show error if the last connection failed
+                //[ProgressHUD showError:@"Login failed. Please check your Moodle URL"];
+            }
         }];
 
     }
@@ -124,8 +133,6 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //NSString *expectedPasscode = @"123"; //TODO: Get actual passcode
-    
     if (buttonIndex == 1) {
         NSString *passcodeString = [alertView textFieldAtIndex:0].text;
         NSLog(@"Got passcode: %@", passcodeString);

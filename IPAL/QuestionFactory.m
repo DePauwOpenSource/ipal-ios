@@ -85,5 +85,4 @@
     NSArray *elements = [doc searchWithXPathQuery:query];
     return [elements[0] objectForKey:@"value"];
 }
-
 @end

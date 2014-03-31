@@ -9,6 +9,8 @@
 #import "QuestionView.h"
 #import "AFNetworking.h"
 #import "MoodleUrlHelper.h"
+#import "ProgressHUD.h"
+
 @implementation QuestionView
 
 -(id) initWithFrame:(CGRect)frame withQuestion:(Question *)question {
@@ -84,7 +86,7 @@
 }
 -(void)submitQuestion {
     NSLog(@"Submitting question...");
-    //add code to submit question
+    [ProgressHUD show:@"Submitting question"];
     NSDictionary *parameters = [self.question getParametersForSubmission];
     NSString *urlString = [MoodleUrlHelper getSubmitUrlWithPasscode:self.question.passcode];
     NSLog(@"URL: %@", urlString);
@@ -92,22 +94,12 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSLog(@"params: %@", parameters);
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Question Submitted"
-                                                               message:@"Your answer is submitted successfully"
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"Ok"
-                                                     otherButtonTitles:nil];
-        [successAlert show];
+        [ProgressHUD showSuccess:@"Question Submitted"];
+        NSLog(@"Question Submitted");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:@"Question Submitted Failed"
-                                                               message:@"Your answer is not submitted. Please try again!"
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"Ok"
-                                                     otherButtonTitles:nil];
-        [failAlert show];
+        [ProgressHUD showError:@"Question not submitted! Please try again."];
     }];
-    NSLog(@"Question submitted...");
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
