@@ -75,6 +75,14 @@
     NSString *username = self.usernameField.text;
     NSString *password = self.passwordField.text;
     [UserPreferences saveUsername:username];
+    __block bool success = false;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    //run only one connection at once, so we run http url and https url connection
+    //one after another.
+    [manager.operationQueue setMaxConcurrentOperationCount:1];
+    
     for (int i=0; i< [possibleUrls count]; i++) {
         NSString *url = [possibleUrls objectAtIndex:i];
         NSString *loginUrl = [url stringByAppendingString:@"login/index.php"];
@@ -88,8 +96,6 @@
             NSLog(@"Cookies cleared.");
         }
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         NSDictionary *parameters = @{@"username": username, @"password": password};
         [manager POST:loginUrl parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             //Sample logic to check login status
@@ -97,26 +103,27 @@
                 NSLog(@"Log in failed: Username/password mismatch.");
                 [ProgressHUD showError:@"Login failed. Please check your username and password"];
             } else {
+                //suspend all other connections
+                [manager.operationQueue setSuspended:true];
                 [ProgressHUD dismiss];
+                success = true;
                 NSLog(@"Login succeeded.");
                 //Popup modal with textfield
                 [UserPreferences saveUrl:url];
-                [self showPasscodeAlert];
-                
+                                [self showPasscodeAlert];
                 //[self performSegueWithIdentifier:@"PushMCQView" sender:sender];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"login failed with url %@", url);
-            if (i == [possibleUrls count]-1) {
-                //show error if the last connection failed
-                //[ProgressHUD showError:@"Login failed. Please check your Moodle URL"];
+            if (i == [possibleUrls count]-1 && !success) {
+                //show error if the last connection failed and no previous connections succeed.
+                [ProgressHUD showError:@"Login failed. Check your Moodle URL!"];
             }
         }];
-
     }
     //NSString *loginUrl = [urlText stringByAppendingString:@"login/index.php"];
     //NSString *urlString = @"http://54.218.0.148/moodle/login/index.php";
-    }
+}
 
 - (void)showPasscodeAlert
 {
