@@ -83,7 +83,7 @@
     }
     
     
-    __block bool success = false;
+    __block bool validUrl = false;
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
@@ -109,21 +109,22 @@
             //Sample logic to check login status
             if ([operation.responseString rangeOfString:@"You are logged in as"].location == NSNotFound) {
                 NSLog(@"Log in failed: Username/password mismatch.");
+                validUrl=true;
                 [ProgressHUD showError:@"Login failed. Please check your username and password"];
             } else {
                 //suspend all other connections
                 [manager.operationQueue setSuspended:true];
                 [ProgressHUD dismiss];
-                success = true;
+                validUrl = true;
                 NSLog(@"Login succeeded.");
                 //Popup modal with textfield
                 [UserPreferences saveUrl:url];
-                                [self showPasscodeAlert];
+                [self showPasscodeAlert];
                 //[self performSegueWithIdentifier:@"PushMCQView" sender:sender];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"login failed with url %@", url);
-            if (i == [possibleUrls count]-1 && !success) {
+            if (i == [possibleUrls count]-1 && !validUrl) {
                 //show error if the last connection failed and no previous connections succeed.
                 [ProgressHUD showError:@"Login failed. Check your Moodle URL!"];
             }
