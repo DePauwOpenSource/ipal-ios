@@ -27,6 +27,10 @@
     self.choicesView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
     self.choicesView.dataSource = self;
     self.choicesView.delegate = self;
+    //Hide separator between empty cells
+    self.choicesView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.choicesView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.choicesView.bounds.size.width, 0.3)];
+    self.choicesView.tableHeaderView.backgroundColor = [UIColor lightGrayColor];
     //the frame of the choicesView will the area between the submit button and question Text
     CGRect frame = CGRectMake(0, self.questionText.frame.origin.y + self.questionText.frame.size.height + CELL_HORIZONTAL_PAD,
                               self.bounds.size.width, self.frame.size.height - self.questionText.frame.origin.y - self.questionText.bounds.size.height - self.submitButton.bounds.size.height);
@@ -76,7 +80,7 @@
     return cell;
 }
 
--(float) tableView:(UITableView *) tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(CGFloat) tableView:(UITableView *) tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSAttributedString *text = [self getAttributedStringForChoiceAtIndex:[indexPath row]];
     CGSize cellSize = CGSizeZero;
     CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(tableView.frame.size.width - 2*CELL_HORIZONTAL_PAD, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
@@ -84,7 +88,7 @@
     return cellSize.height + 2*CELL_VERTICAL_PAD;
 }
 
--(NSAttributedString *) getAttributedStringForChoiceAtIndex:(int)index {
+-(NSAttributedString *) getAttributedStringForChoiceAtIndex:(NSInteger)index {
     NSArray *choices = ((MultipleChoiceQuestion *)self.question).choices;
     NSMutableArray *choiceTexts = [[NSMutableArray alloc] init];
     for (Choice *c in choices) {

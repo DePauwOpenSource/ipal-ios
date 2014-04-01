@@ -41,7 +41,7 @@
 //example: https://moodle.depauw.edu/ will become moodle.depauw.edu
 +(NSString *) stripUrl:(NSString *)url {
     //NSLog(@"Start stripping Url");
-    NSString *strippedUrl;
+    NSString *strippedUrl = url;
     NSString *https = [url substringToIndex:8];
     NSString *http = [url substringToIndex:7];
     if ([https isEqualToString:@"https://"]) {

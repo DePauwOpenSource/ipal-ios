@@ -57,24 +57,32 @@
     [self.urlField resignFirstResponder];
     
     NSString *urlText = self.urlField.text;
+    NSString *username = self.usernameField.text;
+    if (username.length == 0) {
+        [ProgressHUD showError:@"Please enter your username"];
+        return;
+    }
+    NSString *password = self.passwordField.text;
+    if (password.length == 0) {
+        [ProgressHUD showError:@"Please enter your password"];
+        return;
+    }
+    [UserPreferences saveUsername:username];
+    if (urlText.length == 0) {
+        [ProgressHUD showError:@"Please enter your Moodle URL!"];
+        return;
+    }
     [UserPreferences saveUrl:urlText];
     
     NSArray *possibleUrls = [MoodleUrlHelper getPossibleUrls:urlText];
     NSLog(@"Possible Urls: %@", possibleUrls);
     if ([possibleUrls count] == 0) {
         NSLog(@"URL is invalid");
-        UIAlertView *loginFailedAlert = [[UIAlertView alloc] initWithTitle:@"Invalid URL"
-                                                                   message:@"Please check your url again."
-                                                                  delegate:nil
-                                                         cancelButtonTitle:@"Ok"
-                                                         otherButtonTitles:nil];
-        [loginFailedAlert show];
+        [ProgressHUD showError:@"Your URL is invalid"];
         return;
     }
     
-    NSString *username = self.usernameField.text;
-    NSString *password = self.passwordField.text;
-    [UserPreferences saveUsername:username];
+    
     __block bool success = false;
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -131,7 +139,9 @@
     UIAlertView *passcodeAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Please enter the passcode provided to you by your instructor" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Submit", nil];
     
     passcodeAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    
+    [[passcodeAlert textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
+    [passcodeAlert textFieldAtIndex:0 ].clearButtonMode = UITextFieldViewModeWhileEditing;
+
     passcodeAlert.cancelButtonIndex = -1;
     
     [passcodeAlert show];
@@ -145,14 +155,9 @@
         NSLog(@"Got passcode: %@", passcodeString);
         self.passcode = [passcodeString intValue];
         if (self.passcode == 0) {
-            NSLog(@"Invalid passcode %@", passcodeString);
-            UIAlertView *passcodeFailed = [[UIAlertView alloc] initWithTitle:@"Passcode Failed"
-                                                                       message:@"Invalid passcode. Please enter the correct passcode provided by the instructor"
-                                                                      delegate:nil
-                                                             cancelButtonTitle:@"Ok"
-                                                             otherButtonTitles:nil];
-            [passcodeFailed show];
+            [ProgressHUD showError:@"Invalid Passcode. Please see the Intructor!"];
         } else {
+            [ProgressHUD show:@"Loading Question"];
             UIBarButtonItem *newBackButton =
             [[UIBarButtonItem alloc] initWithTitle:@"Logout"
                                              style:UIBarButtonItemStylePlain
@@ -160,6 +165,7 @@
                                             action:nil];
             [[self navigationItem] setBackBarButtonItem:newBackButton];
             [self performSegueWithIdentifier:@"PushQuestionView" sender:self];
+            [ProgressHUD dismiss];
         }
     }
 }
