@@ -17,6 +17,8 @@
 
 @interface QuestionViewController ()
 
+@property (weak, atomic) QuestionView *questionView;
+
 @end
 
 @implementation QuestionViewController
@@ -24,14 +26,11 @@
 - (void)viewDidLoad
 {
     //actually load the current question from the passcode
-    [self loadQuestionView];
     [super viewDidLoad];
-}
-
--(void) loadView {
-    //load an empty question into the view
-    QuestionView *questionView = [self createQuestionViewFromQuestion:[QuestionFactory emptyQuestion]];
-    self.view = questionView;
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.questionView = [self createQuestionViewFromQuestion:[QuestionFactory emptyQuestion]];
+    [self.view addSubview:self.questionView];
+    [self loadQuestionView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,32 +38,34 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (IBAction)getQuestionFromServer:(UIBarButtonItem *)sender {
     [self loadQuestionView];
 }
 
 - (void) loadQuestionView {
-    /*not sure why these code won't update the UI
     [ProgressHUD show:@"Loading question"];
      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-         QuestionView *newQuestionView = [self getQuestionView];
+         NSString *questionUrl = [MoodleUrlHelper getQuestionUrlWithPasscode:self.passcode];
+         NSLog(@"Loading question from url %@", questionUrl);
+         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:questionUrl]];
          dispatch_async(dispatch_get_main_queue(), ^{
-             if (newQuestionView) {
+             if (data) {
+                 Question *question = [QuestionFactory createNewQuestionWithData:data];
+                 NSLog(@"Question Loaded: \n %@", question);
+                 question.passcode = self.passcode;
+                 if (self.questionView){
+                     [self.questionView removeFromSuperview];
+                 }
+                 self.questionView = [self createQuestionViewFromQuestion:question];
+                 [self.view addSubview:self.questionView];
                  [ProgressHUD dismiss];
-                 self.view = newQuestionView;
              } else {
+                 NSLog(@"Unable to load question");
                  [ProgressHUD showError:@"Unable to load question. Check your connection"];
              }
          });
-     });*/
-    [ProgressHUD show:@"Loading question"];
-    QuestionView *newQuestionView = [self getQuestionView];
-    if (newQuestionView) {
-        self.view = newQuestionView;
-        [ProgressHUD dismiss];
-    } else {
-        [ProgressHUD showError:@"Unable to load question. Check your connection"];
-    }
+     });
 }
 
 - (QuestionView *)getQuestionView {
@@ -79,14 +80,15 @@
         questionView = [self createQuestionViewFromQuestion:question];
         NSLog(@"Question Loaded: \n %@", question);
         questionView.question = question;
-        self.view = questionView;
+        //self.view = questionView;
     }
     return questionView;
 }
 
 - (QuestionView *)createQuestionViewFromQuestion:(Question *)question {
-    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
-    CGRect questionViewFrame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, applicationFrame.size.width, applicationFrame.size.height - self.navigationController.navigationBar.frame.size.height);
+    //CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
+    //CGRect questionViewFrame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, applicationFrame.size.width, applicationFrame.size.height - self.navigationController.navigationBar.frame.size.height);
+    CGRect questionViewFrame = self.view.bounds;
     if ([question.type isEqualToString:MULTIPLE_CHOICE]) {
         return [[MultipleChoiceQuestionView alloc] initWithFrame:questionViewFrame withQuestion:question];
     } else if ([question.type isEqualToString:ESSAY]) {

@@ -35,7 +35,7 @@
 #define QUESTION_LABEL_HORIZONTAL_PAD 10
 #define QUESTION_LABEL_VERTICAL_PAD 10
 #define Y_AFTER_NAV_BAR 75
-#define SUBMIT_BUTTON_HEIGHT 40
+#define SUBMIT_BUTTON_HEIGHT 75
 
 
 -(void) initElements {
@@ -64,7 +64,7 @@
     [self.submitButton addTarget:self
                action:@selector(submitQuestion)
      forControlEvents:UIControlEventTouchUpInside];
-    [self.submitButton setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
+    [self.submitButton setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
     [self addSubview:self.submitButton];
 }
 

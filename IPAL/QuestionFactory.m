@@ -16,6 +16,9 @@
 
 + (Question *)createNewQuestionWithData:(NSData *)data
 {
+    if (!data) {
+        return [QuestionFactory emptyQuestion];
+    }
     NSLog(@"Parsing new question");
     TFHpple *doc = [[TFHpple alloc] initWithHTMLData:data];
     
