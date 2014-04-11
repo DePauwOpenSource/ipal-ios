@@ -85,4 +85,11 @@
     NSArray *elements = [doc searchWithXPathQuery:query];
     return [elements[0] objectForKey:@"value"];
 }
+
++(Question *) emptyQuestion {
+    Question *question = [[Question alloc] init];
+    question.text = @"No current question. The instructor have not started the poll or your passcode is invalid";
+    question.type = NO_CURRENT;
+    return question;
+}
 @end

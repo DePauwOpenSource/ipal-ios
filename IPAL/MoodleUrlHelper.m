@@ -56,7 +56,7 @@
     return strippedUrl;
 }
 
-+(NSString *) getSubmitUrlWithPasscode:(int) passcode {
++(NSString *) getQuestionUrlWithPasscode:(int) passcode {
     NSString *moodleUrl = [UserPreferences getUrl];
     NSString *username = [UserPreferences getUsername];
     NSString *questionUrl = [NSString stringWithFormat:@"%@mod/ipal/tempview.php?p=%d&user=%@", moodleUrl, passcode, username];

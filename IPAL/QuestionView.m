@@ -88,7 +88,7 @@
     NSLog(@"Submitting question...");
     [ProgressHUD show:@"Submitting question"];
     NSDictionary *parameters = [self.question getParametersForSubmission];
-    NSString *urlString = [MoodleUrlHelper getSubmitUrlWithPasscode:self.question.passcode];
+    NSString *urlString = [MoodleUrlHelper getQuestionUrlWithPasscode:self.question.passcode];
     NSLog(@"URL: %@", urlString);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

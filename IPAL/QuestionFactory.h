@@ -14,5 +14,5 @@
 @interface QuestionFactory : NSObject
 
 + (Question *)createNewQuestionWithData:(NSData *) data; //Pass data from URL
-
++ (Question *)emptyQuestion;
 @end

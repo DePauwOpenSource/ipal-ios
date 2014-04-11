@@ -23,18 +23,15 @@
 
 - (void)viewDidLoad
 {
+    //actually load the current question from the passcode
+    [self loadQuestionView];
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 -(void) loadView {
-    self.view = [self getQuestionView];
-    if (self.view == NULL) {
-        CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
-        self.view = [[UIView alloc] initWithFrame:applicationFrame];
-        self.view.backgroundColor = [UIColor whiteColor];
-        [ProgressHUD showError:@"Unable to load question. Check your connection"];
-    }
+    //load an empty question into the view
+    QuestionView *questionView = [self createQuestionViewFromQuestion:[QuestionFactory emptyQuestion]];
+    self.view = questionView;
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,19 +40,24 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)getQuestionFromServer:(UIBarButtonItem *)sender {
-    [ProgressHUD show:@""];
-    /*
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        QuestionView *newQuestionView = [self getQuestionView];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (newQuestionView) {
-                [ProgressHUD dismiss];
-                self.view = newQuestionView;
-            } else {
-                [ProgressHUD showError:@"Unable to load question. Check your connection"];
-            }
-        });
-    });*/
+    [self loadQuestionView];
+}
+
+- (void) loadQuestionView {
+    /*not sure why these code won't update the UI
+    [ProgressHUD show:@"Loading question"];
+     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+         QuestionView *newQuestionView = [self getQuestionView];
+         dispatch_async(dispatch_get_main_queue(), ^{
+             if (newQuestionView) {
+                 [ProgressHUD dismiss];
+                 self.view = newQuestionView;
+             } else {
+                 [ProgressHUD showError:@"Unable to load question. Check your connection"];
+             }
+         });
+     });*/
+    [ProgressHUD show:@"Loading question"];
     QuestionView *newQuestionView = [self getQuestionView];
     if (newQuestionView) {
         self.view = newQuestionView;
@@ -67,7 +69,7 @@
 
 - (QuestionView *)getQuestionView {
     QuestionView *questionView = NULL;
-    NSString *questionUrl = [MoodleUrlHelper getSubmitUrlWithPasscode:self.passcode];
+    NSString *questionUrl = [MoodleUrlHelper getQuestionUrlWithPasscode:self.passcode];
     NSLog(@"Loading question from url %@", questionUrl);
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:questionUrl]];
     if (data) {

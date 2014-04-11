@@ -166,7 +166,7 @@
                                             action:nil];
             [[self navigationItem] setBackBarButtonItem:newBackButton];
             [self performSegueWithIdentifier:@"PushQuestionView" sender:self];
-            [ProgressHUD dismiss];
+            //[ProgressHUD dismiss];
         }
     }
 }
