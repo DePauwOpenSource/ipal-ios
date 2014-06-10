@@ -55,6 +55,9 @@
     {
         NSArray *elements = [doc searchWithXPathQuery:@"//legend[1]"];
         TFHppleElement *text = elements[0];
+        if (![text text]) {
+            text = [text firstChild];
+        }
         question = [[EssayQuestion alloc] initWithText:[text text]];
     } else { //If there's no current question, create a new Question object with choices empty
         question = [[Question alloc] init];
