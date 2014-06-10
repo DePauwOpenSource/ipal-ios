@@ -118,6 +118,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5956E4D8194770D700E3B89D /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
 		8DBE427818CE9A9100BE5F50 /* QuestionModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +175,7 @@
 		8DE2680218CD0F2900B8D8AB /* IPAL */ = {
 			isa = PBXGroup;
 			children = (
+				5956E4D8194770D700E3B89D /* iPad */,
 				D235DF3618E984FD00D4E209 /* ProgressHUD */,
 				D22AEA7318D88C9200640864 /* QuestionViews */,
 				8DBE427818CE9A9100BE5F50 /* QuestionModel */,
@@ -520,8 +528,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IPAL/IPAL-Prefix.pch";
 				INFOPLIST_FILE = "IPAL/IPAL-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -537,8 +547,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IPAL/IPAL-Prefix.pch";
 				INFOPLIST_FILE = "IPAL/IPAL-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

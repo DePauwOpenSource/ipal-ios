@@ -113,6 +113,7 @@
             } else {
                 //suspend all other connections
                 [manager.operationQueue setSuspended:true];
+                [manager.operationQueue cancelAllOperations];
                 [ProgressHUD dismiss];
                 validUrl = true;
                 NSLog(@"Login succeeded.");
@@ -150,6 +151,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    //reset to false, so the passcode will be shown when user logs out
     if (buttonIndex == 1) {
         NSString *passcodeString = [alertView textFieldAtIndex:0].text;
         NSLog(@"Got passcode: %@", passcodeString);

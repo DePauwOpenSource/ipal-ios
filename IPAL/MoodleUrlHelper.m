@@ -28,12 +28,12 @@
     NSString *strippedUrl = [MoodleUrlHelper stripUrl:url];
     NSString *http = [NSString stringWithFormat:@"http://%@/", strippedUrl];
     NSString *https = [NSString stringWithFormat:@"https://%@/", strippedUrl];
-    if ([self.class isValidUrl:http]) {
+    //if ([self.class isValidUrl:http]) {
         [urls insertObject:http atIndex:0];
-    }
-    if ([self.class isValidUrl:https]) {
+    //}
+    //if ([self.class isValidUrl:https]) {
         [urls insertObject:https atIndex:1];
-    }
+    //}
     return urls;
 }
 
@@ -42,15 +42,17 @@
 +(NSString *) stripUrl:(NSString *)url {
     //NSLog(@"Start stripping Url");
     NSString *strippedUrl = url;
-    NSString *https = [url substringToIndex:8];
-    NSString *http = [url substringToIndex:7];
-    if ([https isEqualToString:@"https://"]) {
-        strippedUrl = [url substringFromIndex:8];
-    } else if ([http isEqualToString:@"http://"]) {
-        strippedUrl = [url substringFromIndex:7];
-    }
-    if ([strippedUrl characterAtIndex:strippedUrl.length-1] == '/') {
-        strippedUrl = [strippedUrl substringToIndex:strippedUrl.length-1];
+    if ([url length] > 8) {
+        NSString *https = [url substringToIndex:8];
+        NSString *http = [url substringToIndex:7];
+        if ([https isEqualToString:@"https://"]) {
+            strippedUrl = [url substringFromIndex:8];
+        } else if ([http isEqualToString:@"http://"]) {
+            strippedUrl = [url substringFromIndex:7];
+        }
+        if ([strippedUrl characterAtIndex:strippedUrl.length-1] == '/') {
+            strippedUrl = [strippedUrl substringToIndex:strippedUrl.length-1];
+        }
     }
     //NSLog(@"Stripped %@ into %@", url, strippedUrl);
     return strippedUrl;

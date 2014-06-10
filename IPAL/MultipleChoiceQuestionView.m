@@ -35,9 +35,7 @@
     CGRect frame = CGRectMake(0, self.questionText.frame.origin.y + self.questionText.frame.size.height + CELL_HORIZONTAL_PAD,
                               self.bounds.size.width, self.frame.size.height - self.questionText.frame.origin.y - self.questionText.bounds.size.height - self.submitButton.bounds.size.height);
     self.choicesView.frame = frame;
-    if ([self.choicesView respondsToSelector:@selector(seperatorInset)]) {
-        self.choicesView.separatorInset = UIEdgeInsetsZero;
-    }
+    self.choicesView.separatorInset = UIEdgeInsetsZero;
     [self addSubview:self.choicesView];
     
     //NSLog(self.choicesButton);

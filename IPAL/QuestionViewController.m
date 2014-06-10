@@ -57,7 +57,9 @@
                  if (self.questionView){
                      [self.questionView removeFromSuperview];
                  }
-                 self.questionView = [self createQuestionViewFromQuestion:question];
+                 QuestionView *newView = [self createQuestionViewFromQuestion:question];
+                 self.questionView = newView;
+                 //self.questionView = [self createQuestionViewFromQuestion:question];
                  [self.view addSubview:self.questionView];
                  [ProgressHUD dismiss];
              } else {

@@ -28,7 +28,7 @@
     
     Question *question;
     
-    if([[type text] isEqualToString:@"multichoice"])
+    if([[type text] isEqualToString:@"multichoice"] || [[type text] isEqualToString:@"truefalse"])
     {
         TFHppleElement *textElement =[doc peekAtSearchWithXPathQuery:@"//legend"];
         if (![textElement text]) {
