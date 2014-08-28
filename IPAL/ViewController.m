@@ -15,6 +15,8 @@
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *urlField;
 @property int passcode;
+- (void) loginWithURLs:(NSArray *)possibleUrls username:(NSString *)username password:(NSString *)password;
+-(void) loginWithUrl:(NSString *)url username:(NSString *)username password:(NSString *)password;
 @end
 
 @implementation ViewController
@@ -80,8 +82,8 @@
         [ProgressHUD showError:@"Your URL is invalid"];
         return;
     }
-    
-    
+    [self loginWithURLs:possibleUrls username:username password:password];
+    /*
     __block bool validUrl = false;
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -132,8 +134,96 @@
     }
     //NSString *loginUrl = [urlText stringByAppendingString:@"login/index.php"];
     //NSString *urlString = @"http://54.218.0.148/moodle/login/index.php";
+     */
 }
 
+- (void) loginWithURLs:(NSArray *)possibleUrls username:(NSString *)username password:(NSString *)password
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    //run only one connection at once, so we run http url and https url connection
+    //one after another.
+    [manager.operationQueue setMaxConcurrentOperationCount:1];
+    NSString *httpUrl = [possibleUrls objectAtIndex:0];
+    NSString *httpsUrl = [possibleUrls objectAtIndex:1];
+    NSString *loginHttpUrl = [httpUrl stringByAppendingString:@"login/index.php"];
+    NSString *loginHttpsUrl = [httpsUrl stringByAppendingString:@"login/index.php"];
+    NSLog(@"Attempting to log in with url %@...", loginHttpUrl);
+    
+    //Clear existing cookies
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:loginHttpUrl]];
+    for (NSHTTPCookie *cookie in cookies)
+    {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+        NSLog(@"Cookies cleared.");
+    }
+    cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:loginHttpsUrl]];
+    for (NSHTTPCookie *cookie in cookies)
+    {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+        NSLog(@"Cookies cleared.");
+    }
+    NSDictionary *parameters = @{@"username": username, @"password": password};
+    [manager POST:loginHttpUrl parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //Sample logic to check login status
+        if ([operation.responseString rangeOfString:@"You are logged in as"].location == NSNotFound) {
+            NSLog(@"Log in failed: Username/password mismatch.");
+            [self loginWithUrl:httpsUrl username:username password:password];
+            //[ProgressHUD showError:@"Login failed. Please check your username and password"];
+        } else {
+            //suspend all other connections
+            [manager.operationQueue setSuspended:true];
+            [manager.operationQueue cancelAllOperations];
+            [ProgressHUD dismiss];
+            NSLog(@"Login succeeded.");
+            //Popup modal with textfield
+            [UserPreferences saveUrl:httpUrl];
+            [self showPasscodeAlert];
+            //[self performSegueWithIdentifier:@"PushMCQView" sender:sender];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+    {
+        
+        [self loginWithUrl:httpsUrl username:username password:password];
+    }];
+}
+
+-(void) loginWithUrl:(NSString *)url username:(NSString *)username password:(NSString *)password
+{
+    //After the http url failed, login with the https url
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    //run only one connection at once, so we run http url and https url connection
+    //one after another.
+    [manager.operationQueue setMaxConcurrentOperationCount:1];
+    NSString *loginUrl = [url stringByAppendingString:@"login/index.php"];
+    NSLog(@"Attempting to log in with url %@...", loginUrl);
+
+    NSDictionary *parameters = @{@"username": username, @"password": password};
+    [manager POST:loginUrl parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //Sample logic to check login status
+        if ([operation.responseString rangeOfString:@"You are logged in as"].location == NSNotFound) {
+            NSLog(@"Log in failed: Username/password mismatch.");
+            [ProgressHUD showError:@"Login failed. Please check your username and password"];
+        } else {
+            //suspend all other connections
+            [manager.operationQueue setSuspended:true];
+            [manager.operationQueue cancelAllOperations];
+            [ProgressHUD dismiss];
+            NSLog(@"Login succeeded.");
+            //Popup modal with textfield
+            [UserPreferences saveUrl:url];
+            [self showPasscodeAlert];
+            //[self performSegueWithIdentifier:@"PushMCQView" sender:sender];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         //show error if the last connection failed and no previous connections succeed.
+         [ProgressHUD showError:@"Login failed. Check your Moodle URL!"];
+     }];
+}
 - (void)showPasscodeAlert
 {
     NSLog(@"Showing passcode alert.");
